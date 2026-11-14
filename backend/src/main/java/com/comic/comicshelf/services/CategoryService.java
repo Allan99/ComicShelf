@@ -3,7 +3,7 @@ package com.comic.comicshelf.services;
 import com.comic.comicshelf.dto.CategoryDTO;
 import com.comic.comicshelf.entities.Category;
 import com.comic.comicshelf.repositories.CategoryRepository;
-
+import com.comic.comicshelf.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.Page;
@@ -23,5 +23,12 @@ public class CategoryService {
     public List<CategoryDTO> findAll(){
         List<Category> categoryPage = repository.findAll();
         return categoryPage.stream().map(CategoryDTO::new).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public CategoryDTO findByName(String catName){
+        Category cat = repository.searchByName(catName)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+        return new CategoryDTO(cat, cat.getComics());
     }
 }
