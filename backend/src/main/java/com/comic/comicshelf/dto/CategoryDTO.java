@@ -19,7 +19,7 @@ public class CategoryDTO {
     private String name;
 
     @Setter(AccessLevel.NONE)
-    private Set<ComicDTO> comics = new HashSet<>();
+    private Set<ComicExhibitionCardDTO> comics = new HashSet<>();
 
     public CategoryDTO(Category entity){
         id = entity.getId();
@@ -31,7 +31,7 @@ public class CategoryDTO {
         name = entity.getName();
         this.comics = comics
                 .stream()
-                .map(c -> new ComicDTO(c))
+                .map(com -> new ComicExhibitionCardDTO(com))
                 .collect(Collectors.toSet());
     }
 }
