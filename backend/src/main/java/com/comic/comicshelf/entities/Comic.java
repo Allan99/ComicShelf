@@ -2,10 +2,7 @@ package com.comic.comicshelf.entities;
 
 import com.comic.comicshelf.entities.enums.ImageFormat;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -47,6 +44,7 @@ public class Comic {
             joinColumns = @JoinColumn(name = "comic_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();
 
     @PrePersist
