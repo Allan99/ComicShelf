@@ -1,7 +1,9 @@
 package com.comic.comicshelf.services;
 
 import com.comic.comicshelf.dto.CategoryDTO;
+import com.comic.comicshelf.dto.ComicExhibitionCardDTO;
 import com.comic.comicshelf.entities.Category;
+import com.comic.comicshelf.entities.Comic;
 import com.comic.comicshelf.repositories.CategoryRepository;
 import com.comic.comicshelf.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,13 @@ public class CategoryService {
         Category cat = repository.searchByName(catName)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
         return new CategoryDTO(cat, cat.getComics());
+    }
+
+    @Transactional
+    public CategoryDTO insert(CategoryDTO dto){
+        Category category = new Category();
+        category.setName(dto.getName());
+        category = repository.save(category);
+        return new CategoryDTO(category);
     }
 }
