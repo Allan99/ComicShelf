@@ -56,14 +56,8 @@ public class ComicService {
     public ComicDTO update(Long id, ComicDTO dto){
         try {
             Comic comic = repository.getReferenceById(id);
-            comic.setTitle(dto.getTitle());
-            comic.setSizeInBytes(dto.getSizeInBytes());
-            comic.setPublishedAt(dto.getPublishedAt());
-            comic.setLanguage(dto.getLanguage());
-            comic.setImageFormat(dto.getImageFormat());
-            comic.setCreatedAt(dto.getCreatedAt());
-            comic.setSinopse(dto.getSinopse());
-            comic.setImgUrl(dto.getImgUrl());
+            modelMapper.map(dto, comic);
+            comic.setId(id);
             comic = repository.save(comic);
             return new ComicDTO(comic, comic.getCategories());
         }catch(EntityNotFoundException e){
